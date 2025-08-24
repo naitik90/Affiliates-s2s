@@ -1,23 +1,23 @@
 # Affiliate S2S Postback MVP
 
-A minimal **Server-to-Server (S2S) postback tracking system** for affiliate conversions. Tracks clicks, records conversions, and provides a dashboard for affiliates.
+A minimal **Server-to-Server (S2S) tracking system** for affiliate conversions. Tracks clicks, records conversions, and provides a dashboard for affiliates to monitor performance.
 
 ---
 
 ## Overview
-In affiliate marketing, **S2S postbacks** allow advertisers to notify affiliate systems directly when a conversion occurs, without relying on browser cookies or pixels.
+In affiliate marketing, **S2S postbacks** let advertisers notify affiliate systems directly when a conversion occurs, bypassing browser cookies or pixels.
 
-**Flow:**
-1. User clicks an affiliate link:
-GET /click?affiliate_id=1&campaign_id=10&click_id=abc123
+**Example Flow:**
 
-2. Affiliate system stores the click.
-3. User makes a purchase; advertiser fires postback:
+1. **User clicks an affiliate link:**
+- Click is stored in the database.
 
-
+2. **User makes a purchase; advertiser fires postback:**
 GET /postback?affiliate_id=1&click_id=abc123&amount=100&currency=USD
 
-4. Conversion is validated, stored, and displayed in affiliate dashboard.
+- System validates the click and logs the conversion.
+
+3. **Affiliate dashboard** displays clicks and conversions.
 
 ---
 
@@ -29,16 +29,30 @@ GET /postback?affiliate_id=1&click_id=abc123&amount=100&currency=USD
 ---
 
 ## Features
-- Click tracking with affiliate_id, campaign_id, click_id, timestamp.  
+- Track clicks with affiliate_id, campaign_id, click_id, and timestamp.  
 - Postback endpoint to log conversions securely.  
-- Affiliate dashboard to view clicks and conversions.  
-- Unique postback URL format for each affiliate.
+- Affiliate dashboard to view clicks, conversions, and revenue.  
+- Unique postback URL per affiliate:
+
+
+https://affiliate-system.com/postback?affiliate_id={id}&click_id={click_id}&amount={amount}&currency={currency}
+
+
+---
+
+## Database Schema
+**Tables:**
+
+- `affiliates` → id (PK), name  
+- `campaigns` → id (PK), name  
+- `clicks` → id (PK), affiliate_id (FK), campaign_id (FK), click_id (unique), timestamp  
+- `conversions` → id (PK), click_id (FK), amount, currency, timestamp  
 
 ---
 
 ## Setup
 
-### 1. Clone repository
+### 1. Clone Repository
 ```bash
 git clone https://github.com/your-username/affiliate-s2s-mvp.git
 cd affiliate-s2s-mvp
@@ -61,14 +75,14 @@ npm run dev
 API Endpoints
 Click
 GET /click
-Query parameters:
+Query Parameters:
 - affiliate_id (int)
 - campaign_id (int)
 - click_id (string)
 
 Postback
 GET /postback
-Query parameters:
+Query Parameters:
 - affiliate_id (int)
 - click_id (string)
 - amount (float)
@@ -83,11 +97,33 @@ Error (invalid click): { "status": "error", "message": "Invalid click" }
 
 Affiliate Dashboard
 
-Simulated login: select your affiliate.
+Select affiliate (simulated login)
 
-View clicks and conversions under campaigns.
+View clicks and conversions per campaign
 
-Displays affiliate-specific postback URL format:
+Displays affiliate-specific postback URL format
 
-https://affiliate-system.com/postback?affiliate_id={id}&click_id={click_id}&amount={amount}&currency={currency}
+Deliverables
 
+Click endpoint
+
+Postback endpoint
+
+PostgreSQL database schema
+
+Affiliate dashboard
+
+Unique postback URL generation
+
+README with setup instructions and example API requests
+
+License
+
+MIT License
+
+
+---
+
+If you want, I can also make a **“super short version” under one page**, ideal for quick recruiter review, keeping all critical info but extremely concise.  
+
+Do you want me to do that next?
