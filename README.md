@@ -124,6 +124,4 @@ MIT License
 
 ---
 
-If you want, I can also make a **“super short version” under one page**, ideal for quick recruiter review, keeping all critical info but extremely concise.  
 
-Do you want me to do that next?
